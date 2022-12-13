@@ -1,0 +1,193 @@
+a{
+    text-decoration: none;
+    color: rgba(72, 49, 40, 0.91);
+}
+
+body
+{
+    /*background: linear-gradient(90deg, rgba(99, 211, 112, 0.91), #b2ce76);*/
+    background: #f4f3e1;
+    margin: 0px;
+
+    position: relative;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+}
+
+header
+{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr; /*Одна фракция - для логотипов, 2-ая - для пунктов меню.*/
+    /*background-color: #bdb23e;*/
+    background: linear-gradient(77deg, rgba(196, 152, 93, 0.91), #bdb23e);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+nav
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    /*align-items: center;*/
+}
+
+footer
+{
+    /*display: flex; !*Можно комбинировать технологии верстки.*!*/
+    /*position: relative;*/
+    /*overflow: hidden; !*Скрываю, когда выходит за пределы экрана.*!*/
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+
+}
+
+a
+{
+    color: rgba(64, 126, 104, 0.91);
+    text-decoration: none; /*Нет подчеркивания в ссылках на разделы сверху.*/
+    align-self: end;
+    font-size: 20px;
+    font-weight: bold;
+    max-width: fit-content;/*Чтобы ширина текста была как у контента (по умолчанию stretch)*/
+}
+
+a:hover
+{
+    color: #5e2b2b;
+}
+
+.shop
+{
+    /*color: rgba(3, 42, 27, 0.91);*/
+    /*font-size: 30px;*/
+    /*font-weight: bold;*/
+    margin-left: 80px;
+    /*text-shadow: 0px 4px 10px rgba(179, 147, 211, 0.8);*/
+
+    font-size: 30px;
+    font-weight: 600;
+    color: rgba(9, 72, 48, 0.91);
+    text-shadow: 0px 0px 5px rgba(215, 149, 67, 0.91), 0px 0px 10px rgba(155, 127, 89, 0.91), 0px 0px 10px rgba(4, 112, 70, 0.91),
+    0px 0px 20px rgba(217, 183, 133, 0.91);
+}
+
+fieldset{
+    /*display: inline-block;*/
+    border: 5px solid rgba(154, 109, 47, 0.91);
+    width: 400px;
+    margin: auto;
+    border-radius: 25px;
+    text-align: center;
+    background-color: #f3e3a1;
+
+    /*height: 50%;*/
+    /*width: 80%;*/
+    /*background: #ffffff;*/
+    /*margin: auto;*/
+    /*text-align: center;*/
+}
+
+
+h3{
+    margin-left: 30px;
+    text-shadow: #1e6550;
+}
+
+.btn_order{
+    background: #5d8f76;
+    color: #fff;
+    padding: 7px 12px; /* Поля */
+    //margin-bottom: 1em; /* Отступ снизу */
+    border-radius: 10px;
+    margin-left: 50px;
+    margin-bottom: 30px;
+}
+.btn_order:hover {
+    background: #1e6550;
+}
+
+/*--------------------------------------------------------------------------*/
+.img_animals{
+    width: 100%;
+    height: 277px;
+}
+
+/*.img_footer{*/
+/*    !*width: 100%;*!*/
+/*    height: 177px;*/
+/*}*/
+/*-------------------------Авторизация(ВХОД):-------------------------------*/
+#content
+{
+    background: #f3e3a1;
+    border: 5px solid rgba(154, 109, 47, 0.91);
+    margin: 0 auto;
+    padding: 15px 0 0;
+    text-align: center;
+    width: 450px;
+    height: 280px;
+    border-radius: 25px;
+}
+
+.btn {
+    background: #5d8f76;
+    color: #fff;
+    padding: 7px 12px; /* Поля */
+    margin-bottom: 1em; /* Отступ снизу */
+    border-radius: 10px;
+}
+.btn:hover {
+    background: #1e6550;
+}
+/*--------------------------Товары в ряд (product)----------------------------------*/
+
+.block_product{
+    display: inline-block;
+    background: #f3e3a1;
+    border: 5px solid rgba(154, 109, 47, 0.91);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px;
+    max-width: 300px;
+    text-align: center;
+    /*justify-content: center;*/
+    vertical-align: middle;
+    /*height: 100%;*/
+}
+.block_product p{
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 20px;
+    color: #5e2b2b;
+}
+
+.block_product:hover{
+    border: 5px solid rgb(162, 16, 22);
+}
+
+/*-----------------Просмотр заказв АДМИНОМ*/
+.admin_product{
+    display: inline-block;
+    background: #f3e3a1;
+    border: 5px solid rgba(154, 109, 47, 0.91);
+    border-radius: 15px;
+    padding: 5px;
+    margin: 15px;
+    max-width: 300px;
+    text-align: center;
+    /*justify-content: center;*/
+    /*vertical-align: middle;*/
+    /*height: 100%;*/
+}
+.admin_product p{
+    font-family: Arial;
+    font-weight: normal;
+    font-size: 10px;
+    color: #5e2b2b;
+}
+
+.admin_product:hover{
+    border: 3px solid rgb(162, 16, 22);
+}

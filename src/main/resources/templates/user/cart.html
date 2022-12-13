@@ -1,0 +1,49 @@
+<!--Веб.29.11.22 2часть 29:15  созд. шаблон для корзины: -->
+<!--Связь будет ManyToMany (будет табл с id польз-ля, кот. доб товар в корзину, и сам товар).
+У 1 польз-ля в корзине м.б. много товаров; Много товаров м.б. в корзине у 1 польз-ля. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина товаров</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+        <a th:href="@{/orders}" target="_blank" th:action="@{/orders}">История заказов</a>
+        <a th:href="@{/product}" target="_blank" th:action="@{/logout}">ВЫЙТИ</a>
+    </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="ВЫЙТИ из личного кабинета">
+</form>
+<br><hr>
+<!--Веб.29.11.22 2часть 50:20: -->
+<h3>Корзина Ваших выбранных товаров: </h3>
+
+<div class="block_product" th:each="product : ${cart_product}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px" alt="Фото товара">
+    <br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+    <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>
+    <br>
+    <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
+    <hr>
+</div>
+
+<!--Веб.29.11.22 2часть 1:05:10 - выводим сумму всего заказа:-->
+<h3 th:text="'Сумма заказа, руб.: ' +${price}"></h3>
+
+<!--Веб.29.11.22 2часть 1:17:48 – в шаблоне Корзины сделаем ссылку на оформление заказа: -->
+<a class="btn_order" href="/order/create">Оформить заказ</a>
+<br><br><br>
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!--Веб.24.11.22 16:20 – созд. шаблон addProduct: -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление товаров</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+        <!--        <a href="cart.html" target="_blank">КОРЗИНА</a>-->
+        <!--        <a href="login.html" target="_blank">Вход | Регистрация</a>-->
+    </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+<h3>Добавление товаров: </h3>
+
+<form th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
+
+    <label for="title">Введите наименование товара: </label>
+<!--    <input type="text" th:field="*{title}" placeholder="Наименование товара" id="title">-->
+    <textarea name="" th:field="*{title}" placeholder="Наименование товара" id="title" cols="30" rows="5"></textarea>
+<!--//Веб.24.11.22 08:00 - добавим ВАЛИДАЦИЮ (+см.файл AdminController): -->
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    <br><br>
+    <label for="description">Введите описание товара: </label>
+    <textarea name="" th:field="*{description}" placeholder="Описание товара" id="description" cols="30" rows="5"></textarea>
+<!--//Веб.24.11.22 10:40 - добавим ВАЛИДАЦИЮ (+см.файл AdminController): -->
+    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <br><br>
+    <label for="price">Введите стоимость товара, руб.: </label>
+    <input type="number" th:field="*{price}" min="1" step="0.00" placeholder="Стоимость товара, руб." id="price">
+<!--//Веб.24.11.22 10:50 - добавим ВАЛИДАЦИЮ (+см.файл AdminController): -->
+    <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <br><br>
+    <label for="warehouse">Введите наименование склада: </label>
+    <input type="text" th:field="*{warehouse}" placeholder="Наименование склада" id="warehouse">
+<!--//Веб.24.11.22 11:05 - добавим ВАЛИДАЦИЮ (+см.файл AdminController): -->
+    <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+    <br><br>
+    <label for="seller">Введите информацию о продавце: </label>
+    <textarea name="" th:field="*{seller}" placeholder="Информация о продавце" id="seller" cols="30" rows="5"></textarea>
+<!--//Веб.24.11.22 11:15 - добавим ВАЛИДАЦИЮ (+см.файл AdminController): -->
+    <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+    <br><br><br>
+
+<!--Веб.29.11.22 23:40 – на форме это надо все принять (чтоб Категории выводились в выпадающий список): -->
+    <label for="category">Выберите категорию товара: </label>
+    <select name="category" th:field="*{category}" id="category">
+        <!--Перебираем Категории и при поомщи option вставляем их в select: -->
+        <div th:each="element : ${category}">
+            <option th:text="${element.getName()}" th:value="${element.getId()}"></option>
+        </div>
+    </select>
+    <br><br><br>
+<!--Веб.24.11.22 2часть 31:20 – подумаем, ск фото нужно. Ограничимся 5-ю фото: -->
+    <p style="color: orangered">Вы можете добавить до 5 фотографий включительно. При этом добавление хотя бы одного фото обязательно (главное фото).</p>
+
+    <input type="file" name="file_one">
+    <input type="file" name="file_two">
+    <input type="file" name="file_three">
+    <input type="file" name="file_four">
+    <input type="file" name="file_five">
+
+
+<!--Кнопка ДОБАВИТЬ товар: -->
+    <input class="btn_order" type="submit" value="ДОБАВИТЬ">
+
+</form>
+<br><br><br>
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

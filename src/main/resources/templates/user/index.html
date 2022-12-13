@@ -1,0 +1,109 @@
+<!--Веб.10.11.2022 2часть 04:30 ---создадим index: -->
+<!--http://localhost:8080/index-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница_user</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+        <a th:href="@{/cart}" target="_blank" th:action="@{/cart}">КОРЗИНА</a>
+<!--        <a href="login.html" target="_blank">Вход / Регистрация</a>-->
+        <a th:href="@{/orders}" target="_blank" th:action="@{/orders}">История заказов</a>
+<!--        <a th:href="@{/product}" target="_blank" th:action="@{/logout}">ВЫЙТИ</a>-->
+    </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+
+<!--<h3>Главная страница магазина.</h3>-->
+<!--Веб.15.11.22 2часть - на index добавим ссылку, кот. позволит ВЫЙТИ из л.к.: -->
+<!--<a href="/logout">ВЫЙТИ из личного кабинета.</a>-->
+
+<!--Веб.15.11.22 2часть 1:12:30 – важная особенность: если CSRF-токен подключен, то разлогиниться с пом. метода GET (см index – Выйти из л\к) мы уже НЕ можем. Разлогиниться можно только с пом. метода POST.
+Преобразуем ссылку в Метод передачи данных POST: -->
+
+<!--Веб.22.11.22 2часть 33:55  На гл странице магазина сделаю ссылку, кот будет вести на Перечень товаров: -->
+<!--Веб.29.11.22 53:45 - ссылку удаляем, т.к. товар уже выводится на странице index.-->
+<!--<a href="/product">Перечень товаров</a>-->
+<!--<br><br>-->
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="ВЫЙТИ из личного кабинета">
+</form>
+<!--<br><br><hr>-->
+
+<!--Веб.29.11.22 2часть 1:06:05 – доб кнопку, кот будет вести в Корзину (на фронте это можно в ШАПКУ поместить):-->
+<form method="GET" th:action="@{/cart}">
+<!--    <input type="submit" value="КОРЗИНА">-->
+</form>
+<!--<br><br><hr>-->
+
+<!--1^29^50 – на стр index созд кнопку, кот будет вести на стр заказов (ПОМЕСТИТЬ на фронте в ШАПКУ): -->
+<form method="GET" th:action="@{/orders}">
+<!--    <input type="submit" value="История заказов">-->
+</form>
+<!--<br><br><hr>-->
+
+
+<!--Веб.29.11.22 53:55  ФИЛЬТРАЦИЯ, СОРТИРОВКА и т.д. в л.к. пользователя и общей странице для всех пользователей. Созд. форму form в шаблоне index: -->
+<form th:method="POST" th:action="@{/product/search}">
+    <fieldset>
+        <legend>Выберите параметр для сортировки товара: </legend>
+        <br>
+        <label for="search">Поиск по наименованию: </label>
+        <input type="text" name="search" id="search">
+        <br><br><hr>
+        <p>Стоимость, руб.: </p>
+        <label for="from">От: </label>
+        <input type="text" name="from" id="from">
+        <label for="to">До: </label>
+        <input type="text" name="to" id="to">
+        <br><br>
+<!--Веб.29.11.22 1:00:30  сортировка по возр/убыванию:-->
+        <div>
+            <label for="ascending_price">Сортировать по возрастанию цены: </label>
+            <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+            <br>
+            <label for="descending_price">Сортировать по убыванию цены: </label>
+            <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+            <br><br><br><hr>
+<!--Веб.29.11.22 1:03:30? 1:04:50  сортировка по категориям: -->
+            <p>Поиск по категории: </p>
+            <label for="toys">Игрушки: </label>
+            <input type="radio" name="contact" id="toys" value="toys">
+            <br>
+            <label for="houses">Домики: </label>
+            <input type="radio" name="contact" id="houses" value="toys">
+            <br>
+            <label for="bowls">Посуда: </label>
+            <input type="radio" name="contact" id="bowls" value="bowls">
+            <br><br>
+            <input type="submit" value="НАЙТИ">
+        </div>
+     </fieldset>
+</form>
+
+<h3>Доступные товары: </h3>
+<hr>
+<div class="block_product" th:each="product : ${products}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px" alt="Фото товара">
+    <br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+    <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>
+    <br>
+<!-- Веб.29.11.22 2часть 26:00 – в л.к. корзину… оформление заказов.. http://localhost:8080/index Доб.ссылку на КОРЗИНУ: -->
+    <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить в корзину</a>
+    <hr>
+</div>
+
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

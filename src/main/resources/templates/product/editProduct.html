@@ -1,0 +1,68 @@
+<!--Веб.24.11.22 2часть 01:10 – созд. стр. editProduct: -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Редактирование товаров</title>
+  <link rel="icon" th:href="@{/img/icon_title.png}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+  <span class="shop">Товары для животных</span>
+  <nav>
+    <!--        <a href="cart.html" target="_blank">КОРЗИНА</a>-->
+    <!--        <a href="login.html" target="_blank">Вход | Регистрация</a>-->
+  </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+<h3>Редактирование товаров: </h3>
+
+<form th:method="POST" th:action="@{/admin/product/edit/{id}(id=${product.getId()})}" th:object="${product}">
+
+  <label for="title">Введите наименование товара: </label>
+<!--  <input type="text" th:field="*{title}" placeholder="Наименование товара" id="title">-->
+  <textarea name="" th:field="*{title}" placeholder="Наименование товара" id="title" cols="30" rows="5"></textarea>
+<!--  Веб.24.11.22 19:30 – добавим ВАЛИДАЦИЮ и на страницу редактирования:-->
+  <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+  <br><br>
+  <label for="description">Введите описание товара: </label>
+  <textarea name="" th:field="*{description}" placeholder="Описание товара" id="description" cols="30" rows="5"></textarea>
+  <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+  <br><br>
+  <label for="price">Введите стоимость товара, руб.: </label>
+  <input type="number" th:field="*{price}" min="1" step="0.00" placeholder="Стоимость товара, руб." id="price">
+  <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+  <br><br>
+  <label for="warehouse">Введите наименование склада: </label>
+  <input type="text" th:field="*{warehouse}" placeholder="Наименование склада" id="warehouse">
+  <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+  <br><br>
+  <label for="seller">Введите информацию о продавце: </label>
+  <textarea name="" th:field="*{seller}" placeholder="Информация о продавце" id="seller" cols="30" rows="5"></textarea>
+  <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+  <br><br>
+
+<!--Веб.29.11.22 42:50  сделаем, чтобы в РЕДАКТИРОВАНИИ также была категория: -->
+  <label for="category">Выберите категорию товара: </label>
+  <select name="category" th:field="*{category}" id="category">
+    <!--Перебираем Категории и при поомщи option вставляем их в select: -->
+    <div th:each="element : ${category}">
+      <option th:text="${element.getName()}" th:value="${element.getId()}"></option>
+    </div>
+  </select>
+  <br><br><br>
+
+  <!--Кнопка РЕДАКТИРОВАТЬ: -->
+  <input type="submit" value="РЕДАКТИРОВАТЬ">
+
+</form>
+
+<footer>
+  <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!--Веб.15.11.22 2часть 47:45 – создадим template для админа и папку admin: -->
+<!--Веб.15.11.22 2часть 54:40 – заполним шаблон admin: -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет администратора</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+<!--        <a th:href="@{/cart}" target="_blank" th:action="@{/cart}">КОРЗИНА</a>-->
+        <!--        <a href="login.html" target="_blank">Вход / Регистрация</a>-->
+<!--        <a th:href="@{/orders}" target="_blank" th:action="@{/orders}">История заказов</a>-->
+<!--        <a th:href="@{/product}" target="_blank" th:action="@{/logout}">ВЫЙТИ</a>-->
+    </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+<h3 style="color: orange">Вы вошли в личный кабинет администратора!</h3>
+
+<!--Веб.24.11.22 10:25  доб. кнопку выхода из л.к. админа: -->
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="ВЫЙТИ из личного кабинета">
+</form>
+<br><br><hr>
+<!--!!!!!! Вывожу пользователей!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<h3>Информация (данные) о пользователях магазина: </h3>
+<div th:each="person : ${person}">
+    <ul>
+    <li th:text="'Роль пользователя: ' + ${person.getRole()}"></li>
+    <p th:text="'Логин пользователя: ' + ${person.getLogin()}"></p>
+    <p th:text="'ID пользователя: ' + ${person.getId()}"></p>
+<!--    <p th:text="'Пароль пользователя: ' + ${person.getPassword()}"></p>-->
+    </ul>
+
+    <!--!!!!!!!!!!!Смена роли у пользователя---------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<!--    <a th:href="@{/admin/person/edit/{id}(id=${person.getId()})}">Сменить роль пользователю</a>-->
+
+</div>
+<br><hr>
+
+<!--!!!!!! Инфо о заказах: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<h3>Информация о сделанных заказах: </h3>
+<div class="admin_product" th:each="orders : ${orders}">
+    <p th:text="'Наименование товара: ' + ${orders.getProduct.getTitle()}"></p>
+    <p th:text="'Стоимость товара, руб.: ' + ${orders.getPrice}"></p>
+    <p th:text="'Дата оформления заказа: ' + ${orders.getDateTime()}"></p>
+</div>
+<br><hr><br>
+
+<!--!!!!!!Поиск по 4 посл. буквам\цифрам заказа !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+<h3>Поиск заказа по 4-ем последним буквам\цифрам: </h3>
+<form th:action="@{/orders}" method="GET">
+    <input id="orders" name="orders" placeholder="Искать здесь..." type="search">
+    <button type="submit">Поиск</button>
+</form>
+<br><br><br><hr>
+<!--!!!!!!!!!!!Кнопка, кот ведет на историю заказов: !!!!!!!!!!!!!!!!!!!!-->
+<!--<form method="GET" th:action="@{/orders}">-->
+<!--        <input type="submit" value="История заказов">-->
+<!--</form>-->
+
+
+<!--Веб.24.11.22 31:00 – на стр. admin доб. Ссылку для добавления товара: -->
+<a class="btn_order" href="/admin/product/add">Добавить новый товар</a>
+<br><br><br><hr>
+
+<!--Веб.24.11.22 55:10 реализуем и в admin.html (админ на своей гл странице мог просматривать инфо о товарах, см. Метод в AdminController): -->
+<h3>Перечень товаров, доступных в магазине: </h3>
+
+<div th:each="product : ${products}">
+<ul>
+    <li th:text="'Наименование: ' + ${product.getTitle()}"></li>
+    <li th:text="'Описание: ' + ${product.getDescription()}"></li>
+    <li th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></li>
+    <li th:text="'Склад: ' + ${product.getWarehouse()}"></li>
+    <li th:text="'Продавец: ' + ${product.getSeller()}"></li>
+<!--Веб.29.11.22 41:00 – на страницу админа выведем поле Категории: -->
+    <li th:text="'Категория: ' + ${product.getCategory().getName()}"></li>
+    <br>
+</ul>
+    <a th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактировать товар</a>
+    <br><br>
+    <a th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удалить товар</a>
+    <br><br><hr>
+
+</div>
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

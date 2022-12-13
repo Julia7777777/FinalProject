@@ -1,0 +1,154 @@
+<!--Веб.22.11.22 2часть 32:15  под продукты созд. отд. Директорию и шаблон: -->
+<!--http://localhost:8080/product-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Перечень товаров</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+<!--        <a href="cart.html" target="_blank">КОРЗИНА</a>-->
+        <a href="login.html" target="_blank">Вход | Регистрация</a>
+    </nav>
+</header>
+
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+
+
+<!--Веб.29.11.22 1:09:30  обработаем это все
+Вставлю форму из index и на страницу Product тоже
+-->
+<form th:method="POST" th:action="@{/product/search}">
+    <fieldset>
+        <legend>Выберите параметр для сортировки товара: </legend>
+        <br>
+        <label for="search">Поиск по наименованию: </label>
+        <input type="text" name="search" id="search" th:value="*{value_search}">
+        <br><br><hr>
+        <p>Стоимость, руб.: </p>
+        <label for="from">От: </label>
+        <input type="text" name="from" id="from" th:value="*{value_price_from}" size="5">
+        <label for="to">До: </label>
+        <input type="text" name="to" id="to" th:value="*{value_price_to}" size="5">
+        <br><br>
+        <!--Веб.29.11.22 1:00:30  сортировка по возр/убыванию:-->
+        <div>
+            <label for="ascending_price">Сортировать по возрастанию цены: </label>
+            <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+            <br>
+            <label for="descending_price">Сортировать по убыванию цены: </label>
+            <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+            <br><br><br><hr>
+            <!--Веб.29.11.22 1:03:30? 1:04:50  сортировка по категориям: -->
+            <p>Поиск по категории: </p>
+            <label for="toys">Игрушки: </label>
+            <input type="radio" name="contact" id="toys" value="toys">
+            <br>
+            <label for="houses">Домики: </label>
+            <input type="radio" name="contact" id="houses" value="toys">
+            <br>
+            <label for="bowls">Посуда: </label>
+            <input type="radio" name="contact" id="bowls" value="bowls">
+            <br><br>
+            <input type="submit" value="НАЙТИ">
+        </div>
+    </fieldset>
+</form>
+<br><br>
+<!--Веб.29.11.22 2часть 17:28  сделаем так, чтобы выводился рез-т поиска: -->
+<h3>По Вашему запросу найдены следующие товары: </h3>
+<!--<div id="carousel">-->
+    <div class="block_product" th:each="product : ${search_product}">
+                <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px" alt="Фото товара">
+                <br>
+                <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+                <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>
+    </div>
+<!--</div>-->
+<br><br><hr>
+<h3>Доступные товары: </h3>
+<hr>
+
+<div class="block_product" th:each="product : ${products}">
+    <!-- Веб.24.11.22 2часть 1:23:45  грузим ФОТО: -->
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px" alt="Фото товара">
+            <br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+    <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>
+</div>
+
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+
+<!--Веб.22.11.22 2часть 54:52  шаблон product – Выведем Перечень продуктов при помощи перебора товаров через цикл: -->
+<!--<div th:each="product : ${products}">-->
+<!--    <p th:text="'Наименование: ' + ${product.getTitle()}"></p>-->
+<!--    <p th:text="'Описание: ' + ${product.getDescription()}"></p>-->
+<!--    <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+<!--    <p th:text="'Склад: ' + ${product.getWarehouse()}"></p>-->
+<!--    <p th:text="'Продавец: ' + ${product.getSeller()}"></p>-->
+<!--    <hr>-->
+<!--</div>-->
+
+<!--Веб.24.11.22 2часть 1:17:40 – как вывести ФОТО: -->
+<!--<div id="carousel">-->
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--    &lt;!&ndash; Веб.24.11.22 2часть 1:23:45  грузим ФОТО: &ndash;&gt;-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px" alt="Фото товара">-->
+<!--&lt;!&ndash;        <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[1].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#!" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#!" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[2].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[3].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[4].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+<!--    -->
+<!--</div>-->
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

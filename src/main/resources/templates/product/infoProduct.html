@@ -1,0 +1,99 @@
+<!--Веб.24.11.22 2часть 1:34:40 – созд. стр. infoProduct: -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о товаре</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/infoProductStyle.css}">
+</head>
+<body>
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+<!--        <a th:href="@{/cart}" target="_blank" th:action="@{/cart}">КОРЗИНА</a>-->
+<!--        &lt;!&ndash;        <a href="login.html" target="_blank">Вход / Регистрация</a>&ndash;&gt;-->
+<!--        <a th:href="@{/orders}" target="_blank" th:action="@{/orders}">История заказов</a>-->
+<!--        <a th:href="@{/product}" target="_blank" th:action="@{/logout}">ВЫЙТИ</a>-->
+    </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+<h3>Подробная информация о товаре:</h3>
+<ul>
+<li th:text="'Наименование: ' + ${product.getTitle()}"></li>
+<li th:text="'Описание: ' + ${product.getDescription()}"></li>
+<li th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></li>
+<li th:text="'Склад: ' + ${product.getWarehouse()}"></li>
+<li th:text="'Продавец: ' + ${product.getSeller()}"></li>
+
+<!--Веб.29.11.22 48:10 -> сделаем СОРТИРОВКУ товара:
+Заходим user user.  Веб.29.11.22 49:00 - Выведем Категории и на страницу O товаре infoProduct:-->
+<li th:text="'Категория: ' + ${product.getCategory().getName()}"></li>
+</ul>
+<!--Выводим массив ФОТО:-->
+<!--<div th:each="img : ${product.getImageList()}">-->
+<!--  <img th:src="'/img/' + ${img.getFileName()}" width="300px" alt="Фото товара">-->
+<!--</div>-->
+
+
+<!--<div id="carousel" th:each="img : ${product.getImageList()}">-->
+<div id="carousel">
+    <div th:each="img : ${product.getImageList()}">
+   <img class="img" th:src="'/img/' + ${img.getFileName()}" width="300px" alt="Фото товара">
+   <!--        <img class="img" th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px" alt="Фото товара">-->
+    </div>
+
+    <a href="#" class="previous"><span>Prev</span></a>
+    <a href="#" class="next"><span>Next</span></a>
+
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[1].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#!" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#!" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[2].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[3].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+<!--    <div class="img" th:each="product : ${products}">-->
+<!--        <img class="img" th:src="'/img/' + ${product.imageList[4].getFileName()}" width="300px" alt="Фото товара">-->
+<!--        &lt;!&ndash;                <br>&ndash;&gt;-->
+<!--        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--        <p th:text="'Стоимость, руб.: ' + ${product.getPrice()}"></p>-->
+
+<!--        <a href="#" class="previous"><span>Prev</span></a>-->
+<!--        <a href="#" class="next"><span>Next</span></a>-->
+<!--    </div>-->
+
+</div>
+<br><br><br>
+
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

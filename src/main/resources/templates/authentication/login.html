@@ -1,0 +1,56 @@
+<!--Веб.15.11.22 14:07 – созд. Шаблон login: -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>АУТЕНТИФИКАЦИЯ</title>
+    <link rel="icon" th:href="@{/img/icon_title.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <span class="shop">Товары для животных</span>
+    <nav>
+<!--        <a href="cart.html" target="_blank">КОРЗИНА</a>-->
+<!--        <a href="login.html" target="_blank">Вход / Регистрация</a>-->
+    </nav>
+</header>
+<img class="img_animals" th:src="@{/img/animals.jpg}" alt="Картинка под хедером"/>
+
+<!--<h3>АВТОРИЗАЦИЯ (ВХОД):</h3>-->
+
+<form method="POST" action="/process_login">
+<!-- Веб. 15.11.22 2часть 1:11:20 - Идем на страничку login и создаем скрытое поле hidden, в кот. будет храниться CSRF-токен: -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+   <div id="content">
+      <h3>АВТОРИЗАЦИЯ (ВХОД):</h3>
+      <label for="username">Введите логин: </label>
+      <input type="text" placeholder="Введите Ваш логин" name="username" id="username">
+      <br><br>
+
+      <label for="password">Введите пароль: </label>
+      <input type="password" placeholder="Введите Ваш пароль" name="password" id="password">
+      <br><br>
+
+    <!--  Кнопка, кот. будет перезагружать форму и отпарвлять на url-адрес /process_login -->
+      <input class="btn" type="submit" value="ВОЙТИ">
+
+       <!--    Веб.15.11.22 40:15 --- реализуем вывод сообщений, если пользователь вводит некорректные данные: -->
+       <div th:if="${param.error}" style="color: red">
+           Вы ввели некорректный логин и/или пароль.
+       </div>
+       <br><br><br>
+       <!--Веб.22.11.22 2часть 12:20  На станице входа login созд. ссылку, кот. будет вести на страницу регистрации: -->
+       <a href="/authentication/registration">Регистрация</a>
+</form>
+   </div>
+<footer>
+    <img class="img_footer" th:src="@{/img/footer.jpg}" alt="Картинка_подвал сайта"/>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>
+
+<!--ВАЖНО! username и password обязаательно должны иметь такие name! ЗАПОМНИТЬ это! Иначе Spring Security не поймет. -->
